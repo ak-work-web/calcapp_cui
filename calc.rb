@@ -1,21 +1,23 @@
+def get_number(message)
+  loop do
+    print message
+    input = gets.chomp
+    exit if input == "q"
+
+    #数字チェック
+    if input =~ /\A-?\d+(\.\d+)?\z/ #数字の正規表現(/\A-?\d+(\.\d+)?\z/）
+      return input.to_f #qでなければ数字に変換
+    else
+      puts "エラー：有効な数字を入力してください。"
+    end
+  end
+end
+
 loop do
   puts "電卓アプリです！(qで終了)"
 
   #入力数値1
-  num1 = nil
-  loop do
-    print "1つ目の数字を入力："
-    input1 = gets.chomp #これでqを受け取る想定
-    exit if input1 == "q"
-
-    #数字チェック
-    if input1 =~ /\A-?\d+(\.\d+)?\z/ #数字の正規表現(/\A-?\d+(\.\d+)?\z/）
-      num1 = input1.to_f #qでなければ数字に変換
-      break
-    else
-      puts "有効な数字を入力してください。"
-    end
-  end
+  num1 = get_number("\n1つ目の数字を入力：")
 
   #入力演算子
   operator = nil
@@ -24,7 +26,6 @@ loop do
     operator = gets.chomp
     exit if operator == "q"
 
-    # if operator == "+" || operator == "-" || operator == "*" || operator == "/"
     if ["+", "-", "*", "/"].include?(operator)
       break
     else
@@ -33,19 +34,7 @@ loop do
   end
 
   #入力数値2
-  num2 = nil
-  loop do
-    print "2つ目の数字を入力："
-    input2 = gets.chomp
-    exit if input2 == "q"
-
-    if input2 =~ /\A-?\d+(\.\d+)?\z/ #数字の正規表現(/\A-?\d+(\.\d+)?\z/）
-      num2 = input2.to_f
-      break
-    else
-      puts "有効な数字を入力してください。"
-    end
-  end
+  num2 = get_number("2つ目の数字を入力：")
 
   # 【修正】演算子によって計算内容を変える（条件分岐）
   if operator == "+"
